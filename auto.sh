@@ -55,19 +55,19 @@ if [ "$PREPARER" -eq 1 ]; then
 	# Step 1
 	for VAL in "${selected_validators[@]}"
 	do  
-	  qwoynd tx staking delegate "${VAL}" 50000000000uqwoyn --from "${PermanentLockedAccount}" --fees 12500uqwoyn --gas 400000 --generate-only >> "step1_${VAL:12:5}.json"
+	  qwoynd tx staking delegate "${VAL}" 50000000000uqwoyn --from "${PermanentLockedAccount}" --chain-id=qwoyn-1 --node https://qwoyn-rpc.kalia.network:443 --fees 12500uqwoyn --gas 400000 --generate-only >> "step1_${VAL:12:5}.json"
 	done
 
 	# Step 2 - will be upload kalianetwork github
 	for VAL in "${selected_validators[@]}"
 	do  
-	  qwoynd tx authz exec step1_${VAL:12:5}.json --from ${BaseAccount} --fees 12500uqwoyn --gas 400000 --generate-only >> step2_${VAL:12:5}.json
+	  qwoynd tx authz exec step1_${VAL:12:5}.json --from ${BaseAccount} --chain-id=qwoyn-1 --node https://qwoyn-rpc.kalia.network:443 --fees 12500uqwoyn --gas 400000 --generate-only >> step2_${VAL:12:5}.json
 	done
 
 	# Step 3
 	for VAL in "${selected_validators[@]}"
 	do  
-	  qwoynd tx sign step2_${VAL:12:5}.json --multisig ${BaseAccount} --from ${SIGNER} --output-document step3_${VAL:12:5}_${SIGNER}.json
+	  qwoynd tx sign step2_${VAL:12:5}.json --multisig ${BaseAccount} --from ${SIGNER} --chain-id=qwoyn-1 --node https://qwoyn-rpc.kalia.network:443 --output-document step3_${VAL:12:5}_${SIGNER}.json
 	done
 
 else
@@ -76,7 +76,7 @@ else
   # Step 3
   for VAL in "${selected_validators[@]}"
   do  
-    qwoynd tx sign step2_${VAL:12:5}.json --multisig ${BaseAccount} --from ${SIGNER} --output-document step3_${VAL:12:5}_${SIGNER}.json
+    qwoynd tx sign step2_${VAL:12:5}.json --multisig ${BaseAccount} --from ${SIGNER} --chain-id=qwoyn-1 --node https://qwoyn-rpc.kalia.network:443 --output-document step3_${VAL:12:5}_${SIGNER}.json
   done
 	
 	
